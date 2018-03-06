@@ -28,6 +28,7 @@ def init_driver(file_path):
     # Starting maximized fixes https://github.com/ChrisMuir/Zillow/issues/1
     options = webdriver.ChromeOptions()
     options.add_argument("--start-maximized")
+    ##options.binary_location = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
     driver = webdriver.Chrome(executable_path=file_path,
                               chrome_options=options)
     driver.wait = WebDriverWait(driver, 10)
@@ -72,14 +73,14 @@ def check_for_captcha(driver):
 def navigate_to_website(driver, site):
     driver.get(site)
     # Check to make sure a captcha page is not displayed.
-    check_for_captcha(driver)
+    #########check_for_captcha(driver)
 
 def click_buy_button(driver):
     try:
         button = driver.wait.until(EC.element_to_be_clickable(
             (By.CLASS_NAME, "nav-header")))
         button.click()
-        time.sleep(10)
+        time.sleep(15)
     except (TimeoutException, NoSuchElementException):
         raise ValueError("Clicking the 'Buy' button failed")
     # Check to make sure a captcha page is not displayed.
