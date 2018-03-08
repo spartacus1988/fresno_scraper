@@ -8,6 +8,8 @@ import json
 data = {"bed":3,"miniBubbleType":1,"image":"https://photos.zillowstatic.com/p_a/ISyfyo1ab0swkw1000000000.jpg","sqft":1641,"label":"$285K","isPropertyTypeVacantLand":False,"datasize":9,"title":"$285K","bath":2.5,"homeInfo":{"zpid": 2094098289,"streetAddress": "Canvas 2 Plan, Belterra","zipcode": "93727","city": "Fresno","state": "CA","latitude": 36.774371,"longitude": -119.681827,"price": 284950.0,"dateSold": 0,"bathrooms": 2.5,"bedrooms": 3.0,"livingArea": 1641.0,"yearBuilt": 2018,"lotSize": -1.0,"homeType": "SINGLE_FAMILY","homeStatus": "FOR_SALE","photoCount": 22,"imageLink": "https://photos.zillowstatic.com/p_g/ISyfyo1ab0swkw1000000000.jpg","daysOnZillow": 2,"isFeatured": True,"shouldHighlight": False,"brokerId": 15556,"contactPhone": "5594408398","group_type": "BUILDER_COMMUNITY","grouping_id": 771532,"grouping_name": "Belterra","zestimate": 298720,"listing_sub_type": {"is_newHome": True,"is_openHouse": True},"priceReduction": "","priceSuffix": "+","isUnmappable": False,"title": "Canvas 2 Plan","mediumImageLink": "https://photos.zillowstatic.com/p_c/ISyfyo1ab0swkw1000000000.jpg","isPreforeclosureAuction": False,"homeStatusForHDP": "FOR_SALE","priceForHDP": 284950.0,"festimate": 268848,"isListingOwnedByCurrentSignedInAgent": False,"timeOnZillow": 1520284560000,"isListingClaimedByCurrentSignedInUser": False,"hiResImageLink": "https://photos.zillowstatic.com/p_f/ISyfyo1ab0swkw1000000000.jpg","watchImageLink": "https://photos.zillowstatic.com/p_j/ISyfyo1ab0swkw1000000000.jpg","contactPhoneExtension": "","tvImageLink": "https://photos.zillowstatic.com/p_m/ISyfyo1ab0swkw1000000000.jpg","tvCollectionImageLink": "https://photos.zillowstatic.com/p_l/ISyfyo1ab0swkw1000000000.jpg","tvHighResImageLink": "https://photos.zillowstatic.com/p_n/ISyfyo1ab0swkw1000000000.jpg","zillowHasRightsToImages": False,"newConstructionType": "BUILDER_PLAN","desktopWebHdpImageLink": "https://photos.zillowstatic.com/p_h/ISyfyo1ab0swkw1000000000.jpg","hideZestimate": False,"isPremierBuilder": True}}
 
 
+print(len(str(data)))
+
 #data = {"bed":3,"miniBubbleType":1,"image":"https:\\/\\/photos.zillowstatic.com\\/p_a\\/ISyfyo1ab0swkw1000000000.jpg","sqft":1641,"label":"$285K","isPropertyTypeVacantLand":false,"datasize":9,"title":"$285K","bath":2.5,"homeInfo":{"zpid": 2094098289,"streetAddress": "Canvas 2 Plan, Belterra","zipcode": "93727","city": "Fresno","state": "CA","latitude": 36.774371,"longitude": \-119.681827,"price": 284950.0,"dateSold": 0,"bathrooms": 2.5,"bedrooms": 3.0,"livingArea": 1641.0,"yearBuilt": 2018,"lotSize": \-1.0,"homeType": "SINGLE_FAMILY","homeStatus": "FOR_SALE","photoCount": 22,"imageLink": "https://photos.zillowstatic.com/p_g/ISyfyo1ab0swkw1000000000.jpg","daysOnZillow": 2,"isFeatured": true,"shouldHighlight": false,"brokerId": 15556,"contactPhone": "5594408398","group_type": "BUILDER_COMMUNITY","grouping_id": 771532,"grouping_name": "Belterra","zestimate": 298720,"listing_sub_type": {"is_newHome": true,"is_openHouse": true},"priceReduction": "","priceSuffix": "+","isUnmappable": false,"title": "Canvas 2 Plan","mediumImageLink": "https://photos.zillowstatic.com/p_c/ISyfyo1ab0swkw1000000000.jpg","isPreforeclosureAuction": false,"homeStatusForHDP": "FOR_SALE","priceForHDP": 284950.0,"festimate": 268848,"isListingOwnedByCurrentSignedInAgent": false,"timeOnZillow": 1520284560000,"isListingClaimedByCurrentSignedInUser": false,"hiResImageLink": "https://photos.zillowstatic.com/p_f/ISyfyo1ab0swkw1000000000.jpg","watchImageLink": "https://photos.zillowstatic.com/p_j/ISyfyo1ab0swkw1000000000.jpg","contactPhoneExtension": "","tvImageLink": "https://photos.zillowstatic.com/p_m/ISyfyo1ab0swkw1000000000.jpg","tvCollectionImageLink": "https://photos.zillowstatic.com/p_l/ISyfyo1ab0swkw1000000000.jpg","tvHighResImageLink": "https://photos.zillowstatic.com/p_n/ISyfyo1ab0swkw1000000000.jpg","zillowHasRightsToImages": false,"newConstructionType": "BUILDER_PLAN","desktopWebHdpImageLink": "https://photos.zillowstatic.com/p_h/ISyfyo1ab0swkw1000000000.jpg","hideZestimate": false,"isPremierBuilder": true}}
 
 #print(str(data))
@@ -21,8 +23,6 @@ print(data)
 
 data = data[:-1]
 
-#data = data.strip()
-
 
 print(data)
 
@@ -35,12 +35,20 @@ result = None
 for item in data:
     newitem = item.split(':')
     for res in newitem:
-        if res == "'bed'":
+        #print(res)
+        #print(len(res))
+        #if res == " 'zestimate'":
+        if "zestimate" in res:
+
             result = newitem
             break
 
 if result is None:
     result = "N/A"
+
+
+
+print(result)
 
 print(result[1])
 
@@ -195,9 +203,7 @@ for idx, term in enumerate(st):
         # URL for each house listing
         new_obs.append(zl.get_url(soup))
 
-
-
-        #Zestimate
+        #zestimate
         new_obs.append(zl.get_zestimate(soup))
 
 
@@ -205,7 +211,7 @@ for idx, term in enumerate(st):
 
         # Append new_obs to list output_data.
         output_data.append(new_obs)
-        break
+        #break
 
 # Close the webdriver connection.
 zl.close_connection(driver)
@@ -217,5 +223,5 @@ zl.close_connection(driver)
 file_name = "%s_%s.csv" % (str(time.strftime("%Y-%m-%d")),
                            str(time.strftime("%H%M%S")))
 columns = ["address", "city", "state", "zip", "price", "sqft", "bedrooms",
-           "bathrooms", "days_on_zillow", "sale_type", "url"]
-#pd.DataFrame(output_data, columns = columns).to_csv(file_name, index = False)
+           "bathrooms", "days_on_zillow", "sale_type", "url", "zestimate"]
+pd.DataFrame(output_data, columns = columns).to_csv(file_name, index = False)

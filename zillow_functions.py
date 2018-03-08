@@ -164,7 +164,7 @@ def get_html(driver):
                     keep_going = False
             else:
                 keep_going = False
-        return (output)
+        #return (output)
     return(output)
 
 # Split the raw page source into segments, one for each home listing.
@@ -173,8 +173,8 @@ def get_listings(list_obj):
     for i in list_obj:
         htmlSplit = i.split('" id="zpid_')[1:]
         output += htmlSplit
-        return (output)
-        break
+        #return (output)
+        #break
     return(output)
 
 # Helper function for testing if an object is "empty" or not.
@@ -389,7 +389,7 @@ def get_zestimate(soup_obj):
 
         #print("type_zestimate_is_text: " + str(type(comments[0])))
 
-        print("type_zestimate_is_text: " + str(comments[0].extract()))
+        #print("type_zestimate_is_text: " + str(comments[0].extract()))
 
         #temp = comments[0].extract()get_text()
         #temp = comments[0].get_text()
@@ -398,35 +398,35 @@ def get_zestimate(soup_obj):
 
         #[comment.extract() for comment in comments]
 
-        print("FUCK YOU!!!!!!!!!!!")
-
-        #comment = comments[0]#.get_text()
-
-        print("FUCK YOU!!!!!!!!!!!")
-        print("FUCK YOU!!!!!!!!!!!")
-        print("FUCK YOU!!!!!!!!!!!")
+        # print("FUCK YOU!!!!!!!!!!!")
+        #
+        # #comment = comments[0]#.get_text()
+        #
+        # print("FUCK YOU!!!!!!!!!!!")
+        # print("FUCK YOU!!!!!!!!!!!")
+        # print("FUCK YOU!!!!!!!!!!!")
 
         comment = str(comments[0].extract())
 
-        print(str(type(comment)))
+        #print(str(type(comment)))
 
         #data = json.dumps(str(comment))
 
-        print(str(type(comment)))
+        #print(str(type(comment)))
 
 
 
 
 
-        print("FUCK YOU!!!!!!!!!!!")
-        print("FUCK YOU!!!!!!!!!!!")
-        print("FUCK YOU!!!!!!!!!!!")
-
-        print(comment)
-
-        print("FUCK YOU!!!!!!!!!!!")
-        print("FUCK YOU!!!!!!!!!!!")
-        print("FUCK YOU!!!!!!!!!!!")
+        # print("FUCK YOU!!!!!!!!!!!")
+        # print("FUCK YOU!!!!!!!!!!!")
+        # print("FUCK YOU!!!!!!!!!!!")
+        #
+        # print(comment)
+        #
+        # print("FUCK YOU!!!!!!!!!!!")
+        # print("FUCK YOU!!!!!!!!!!!")
+        # print("FUCK YOU!!!!!!!!!!!")
 
         comment = comment.replace('\\', '')
 
@@ -434,14 +434,45 @@ def get_zestimate(soup_obj):
         #print(mystring.replace("String", "Text"))
 
 
-        print(comment)
+        #print(comment)
 
         comment = comment.replace('true', 'True')
         comment = comment.replace('false', 'False')
 
-        print(comment)
+        #print(comment)
+        #print(len(comment))
 
-        print(str(type(comment)))
+        comment = comment[1:]
+        #print(comment)
+
+        comment = comment[:-1]
+
+        #print(comment)
+
+        comment = str(comment).split(',')
+
+        result = None
+
+        for item in comment:
+            newitem = item.split(':')
+            for res in newitem:
+                #print(res)
+                #print(len(res))
+                if "zestimate" in res:
+                    result = newitem
+                    break
+
+        if result is None:
+            result = "N/A"
+
+        #print(result)
+
+        #print(result[1])
+
+        zestimate = result[1]
+        return zestimate
+
+
 
         #import json
 
