@@ -10,6 +10,12 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 from selenium.common.exceptions import NoSuchElementException
+#from bs4 import BeautifulSoup
+#from BeautifulSoup import Comment
+from bs4 import BeautifulSoup, Comment
+import json
+from pprint import pprint
+
 
 def zipcodes_list(st_items):
     # If st_items is a single zipcode string.
@@ -158,6 +164,7 @@ def get_html(driver):
                     keep_going = False
             else:
                 keep_going = False
+        return (output)
     return(output)
 
 # Split the raw page source into segments, one for each home listing.
@@ -166,6 +173,8 @@ def get_listings(list_obj):
     for i in list_obj:
         htmlSplit = i.split('" id="zpid_')[1:]
         output += htmlSplit
+        return (output)
+        break
     return(output)
 
 # Helper function for testing if an object is "empty" or not.
@@ -312,8 +321,13 @@ def get_bathrooms(list_obj):
 
 def get_days_on_market(soup_obj):
     try:
+        print("get_days_on_market")
         dom = soup_obj.find_all(
             "ul", {"class" : "zsg-list_inline zsg-photo-card-badge"})
+
+        print("dom_is:" + str(dom))
+
+
         if dom is not None:
             dom = [n.get_text().strip().lower() for n in dom]
             dom = [n for n in dom if "zillow" in n]
@@ -358,6 +372,247 @@ def get_url(soup_obj):
         else:
             url = "NA"
     return(url)
+
+
+
+def get_zestimate(soup_obj):
+    try:
+        zestimate = soup_obj.find("div", {"class" : "zsg-photo-card-img"})#.get_text().strip()
+        comments = soup_obj.findAll(text=lambda text: isinstance(text, Comment))#.get_text().strip()
+        #print("zestimate_is: " + str(comments))
+
+        #print("zestimate_is: " + str(comments[0]))
+
+        #print("zestimate_is: " + str(comments[0][0]))
+
+        #print("zestimate_first_key_is: " + comments[0]["bed"])
+
+        #print("type_zestimate_is_text: " + str(type(comments[0])))
+
+        print("type_zestimate_is_text: " + str(comments[0].extract()))
+
+        #temp = comments[0].extract()get_text()
+        #temp = comments[0].get_text()
+
+
+
+        #[comment.extract() for comment in comments]
+
+        print("FUCK YOU!!!!!!!!!!!")
+
+        #comment = comments[0]#.get_text()
+
+        print("FUCK YOU!!!!!!!!!!!")
+        print("FUCK YOU!!!!!!!!!!!")
+        print("FUCK YOU!!!!!!!!!!!")
+
+        comment = str(comments[0].extract())
+
+        print(str(type(comment)))
+
+        #data = json.dumps(str(comment))
+
+        print(str(type(comment)))
+
+
+
+
+
+        print("FUCK YOU!!!!!!!!!!!")
+        print("FUCK YOU!!!!!!!!!!!")
+        print("FUCK YOU!!!!!!!!!!!")
+
+        print(comment)
+
+        print("FUCK YOU!!!!!!!!!!!")
+        print("FUCK YOU!!!!!!!!!!!")
+        print("FUCK YOU!!!!!!!!!!!")
+
+        comment = comment.replace('\\', '')
+
+        #mystring = "This Is A String"
+        #print(mystring.replace("String", "Text"))
+
+
+        print(comment)
+
+        comment = comment.replace('true', 'True')
+        comment = comment.replace('false', 'False')
+
+        print(comment)
+
+        print(str(type(comment)))
+
+        #import json
+
+        # data = json.dumps(comment)
+        #
+        #
+        #
+        #
+        # data = json.loads(str(comment))
+        #
+        # print("FUCK YOU!!!!!!!!!!!")
+        # print("FUCK YOU!!!!!!!!!!!")
+        # print("FUCK YOU!!!!!!!!!!!")
+        #
+        # print(str(type(data)))
+
+        # print(data)
+        #
+        # print("FUCK YOU!!!!!!!!!!!")
+        # print("FUCK YOU!!!!!!!!!!!")
+        # print("FUCK YOU!!!!!!!!!!!")
+        #
+        #
+        # # data = json.dumps(data)
+        # #
+        # # print(str(type(data)))
+        # #
+        # # data = json.loads(data)
+
+        #print("FUCK YOU!!!!!!!!!!!")
+
+        #print(str(type(data)))
+
+        #print(data)
+        #print(data["bed"])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        #dict = json.loads(data)
+
+       # print(str(type(dict)))
+
+
+
+
+
+
+        # for comment in comments:
+        #     print("FUCK YOU!!!!!!!!!!!")
+        #     comment = comment.extract()
+        #     #print(comment.strip())
+        #     print(str(type(comment)))
+        #
+        #     print(comment)
+
+
+        #comments = soup_obj.findAll(text=lambda text: isinstance(text, Comment)).get_text().strip()
+        #print(str(len(comments)))
+
+        #print(str(comments.text))
+
+
+
+
+        # result = []
+        # for comment in comments:
+        #     print("FUCK YOU!!!!!!!!!!!")
+        #     print(comment)
+        #     result.extend(comment.find_all(text='bed'))
+
+        #print(result)
+
+
+
+        #print(json.dumps("\"foo\bar"))
+        #print(json.dumps(str({"bed":3,"miniBubbleType":1})))
+        #print("FUCK YOU!!!!!!!!!!!")
+        #print(json.dumps(str(comments[0].extract())))
+
+        #s = json.dumps(str(comments[0].extract()))
+
+
+
+        #newdict = dict([[x[1:-1] for x in s.split('\\')], ])
+
+
+        #print (str(type(newdict)))
+        #print(newdict["bed"])
+
+
+        #data = json.dumps(str(comments[0].extract()))
+        #data = json.loads(data)
+        #print(data)
+
+        #dict = json.loads(data)
+
+        #print(str(type(dict)))
+
+        #print(data['bed'])
+
+
+
+        #print(json.dumps(str(comments[0].extract())))
+
+
+
+
+
+
+        #print("type_zestimate_is_text: " + str(comments[0].extract()))
+
+        #newDictionary = json.loads(str({"bed":3,"miniBubbleType":1}))
+
+        #pprint(str(type(newDictionary)))
+
+       # print(newDictionary["bed"])
+
+
+        #lobbying = {}
+        #for element in temp:
+           # lobbying[element.a.get_text()] = {}
+            #print("element is "  + element)
+
+
+
+
+        #print("type of temp is " +temp)
+
+        #print("type of temp is " + str(type(temp)))
+
+
+
+        #print("type_zestimate_is_text: " + str(comments[0].extract()["bed"]))
+
+
+
+
+        # for key in comments[0].keys():
+        #     print("key_is: " + str(key))
+        #     print("value_is: " + str(value))
+        #     if key == "miniBubbleType":
+        #         print("key_is: " + str(key))
+        #         print("value_is: " + str(value))
+        #         zestimate = value
+        #
+        # for key, value in comments[0].items():
+        #     print(key, value)
+        #
+        # for item in comments[0]:
+        #     print(item)
+
+
+    except (ValueError, AttributeError):
+        zestimate = "NA"
+    if _is_empty(zestimate):
+        zestimate = "NA"
+    return(zestimate)
+
+
+
 
 def close_connection(driver):
     driver.quit()
