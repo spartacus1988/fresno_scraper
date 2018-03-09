@@ -379,79 +379,16 @@ def get_zestimate(soup_obj):
     try:
         zestimate = soup_obj.find("div", {"class" : "zsg-photo-card-img"})#.get_text().strip()
         comments = soup_obj.findAll(text=lambda text: isinstance(text, Comment))#.get_text().strip()
-        #print("zestimate_is: " + str(comments))
-
-        #print("zestimate_is: " + str(comments[0]))
-
-        #print("zestimate_is: " + str(comments[0][0]))
-
-        #print("zestimate_first_key_is: " + comments[0]["bed"])
-
-        #print("type_zestimate_is_text: " + str(type(comments[0])))
-
-        #print("type_zestimate_is_text: " + str(comments[0].extract()))
-
-        #temp = comments[0].extract()get_text()
-        #temp = comments[0].get_text()
-
-
-
-        #[comment.extract() for comment in comments]
-
-        # print("FUCK YOU!!!!!!!!!!!")
-        #
-        # #comment = comments[0]#.get_text()
-        #
-        # print("FUCK YOU!!!!!!!!!!!")
-        # print("FUCK YOU!!!!!!!!!!!")
-        # print("FUCK YOU!!!!!!!!!!!")
-
         comment = str(comments[0].extract())
-
-        #print(str(type(comment)))
-
-        #data = json.dumps(str(comment))
-
-        #print(str(type(comment)))
-
-
-
-
-
-        # print("FUCK YOU!!!!!!!!!!!")
-        # print("FUCK YOU!!!!!!!!!!!")
-        # print("FUCK YOU!!!!!!!!!!!")
-        #
-        # print(comment)
-        #
-        # print("FUCK YOU!!!!!!!!!!!")
-        # print("FUCK YOU!!!!!!!!!!!")
-        # print("FUCK YOU!!!!!!!!!!!")
-
         comment = comment.replace('\\', '')
-
-        #mystring = "This Is A String"
-        #print(mystring.replace("String", "Text"))
-
-
-        #print(comment)
-
         comment = comment.replace('true', 'True')
         comment = comment.replace('false', 'False')
-
-        #print(comment)
-        #print(len(comment))
-
         comment = comment[1:]
-        #print(comment)
-
         comment = comment[:-1]
-
-        #print(comment)
-
         comment = str(comment).split(',')
 
         result = None
+        zestimate = None
 
         for item in comment:
             newitem = item.split(':')
@@ -462,185 +399,112 @@ def get_zestimate(soup_obj):
                     result = newitem
                     break
 
-        if result is None:
-            result = "N/A"
 
-        #print(result)
 
-        #print(result[1])
-
-        zestimate = result[1]
+        if zestimate is None:
+            zestimate = "N/A"
+        else:
+            zestimate = result[1]
         return zestimate
 
-
-
-        #import json
-
-        # data = json.dumps(comment)
-        #
-        #
-        #
-        #
-        # data = json.loads(str(comment))
-        #
-        # print("FUCK YOU!!!!!!!!!!!")
-        # print("FUCK YOU!!!!!!!!!!!")
-        # print("FUCK YOU!!!!!!!!!!!")
-        #
-        # print(str(type(data)))
-
-        # print(data)
-        #
-        # print("FUCK YOU!!!!!!!!!!!")
-        # print("FUCK YOU!!!!!!!!!!!")
-        # print("FUCK YOU!!!!!!!!!!!")
-        #
-        #
-        # # data = json.dumps(data)
-        # #
-        # # print(str(type(data)))
-        # #
-        # # data = json.loads(data)
-
-        #print("FUCK YOU!!!!!!!!!!!")
-
-        #print(str(type(data)))
-
-        #print(data)
-        #print(data["bed"])
+    except (ValueError, AttributeError):
+        zestimate = "N/A"
+    if _is_empty(zestimate):
+        zestimate = "N/A"
+    return(zestimate)
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-        #dict = json.loads(data)
-
-       # print(str(type(dict)))
-
-
-
-
-
-
-        # for comment in comments:
-        #     print("FUCK YOU!!!!!!!!!!!")
-        #     comment = comment.extract()
-        #     #print(comment.strip())
-        #     print(str(type(comment)))
-        #
-        #     print(comment)
-
-
-        #comments = soup_obj.findAll(text=lambda text: isinstance(text, Comment)).get_text().strip()
+def get_Build_in(soup_obj):
+    try:
+        buildin = soup_obj.find("div", {"class" : "zsg-photo-card-img"})#.get_text().strip()
+        comments = soup_obj.findAll(text=lambda text: isinstance(text, Comment))#.get_text().strip()
+        if len(comments) == 0:
+            return "N/A"
         #print(str(len(comments)))
+        #for comment in comments:
+        #    print(comment)
+        comment = str(comments[0].extract())
+        comment = comment.replace('\\', '')
+        comment = comment.replace('true', 'True')
+        comment = comment.replace('false', 'False')
+        comment = comment[1:]
+        comment = comment[:-1]
+        comment = str(comment).split(',')
 
-        #print(str(comments.text))
+        result = None
+        buildin = None
 
-
-
-
-        # result = []
-        # for comment in comments:
-        #     print("FUCK YOU!!!!!!!!!!!")
-        #     print(comment)
-        #     result.extend(comment.find_all(text='bed'))
-
-        #print(result)
-
-
-
-        #print(json.dumps("\"foo\bar"))
-        #print(json.dumps(str({"bed":3,"miniBubbleType":1})))
-        #print("FUCK YOU!!!!!!!!!!!")
-        #print(json.dumps(str(comments[0].extract())))
-
-        #s = json.dumps(str(comments[0].extract()))
-
-
-
-        #newdict = dict([[x[1:-1] for x in s.split('\\')], ])
-
-
-        #print (str(type(newdict)))
-        #print(newdict["bed"])
-
-
-        #data = json.dumps(str(comments[0].extract()))
-        #data = json.loads(data)
-        #print(data)
-
-        #dict = json.loads(data)
-
-        #print(str(type(dict)))
-
-        #print(data['bed'])
+        for item in comment:
+            newitem = item.split(':')
+            for res in newitem:
+                #print(res)
+                #print(len(res))
+                if "yearBuilt" in res:
+                    result = newitem
+                    break
 
 
 
-        #print(json.dumps(str(comments[0].extract())))
-
-
-
-
-
-
-        #print("type_zestimate_is_text: " + str(comments[0].extract()))
-
-        #newDictionary = json.loads(str({"bed":3,"miniBubbleType":1}))
-
-        #pprint(str(type(newDictionary)))
-
-       # print(newDictionary["bed"])
-
-
-        #lobbying = {}
-        #for element in temp:
-           # lobbying[element.a.get_text()] = {}
-            #print("element is "  + element)
-
-
-
-
-        #print("type of temp is " +temp)
-
-        #print("type of temp is " + str(type(temp)))
-
-
-
-        #print("type_zestimate_is_text: " + str(comments[0].extract()["bed"]))
-
-
-
-
-        # for key in comments[0].keys():
-        #     print("key_is: " + str(key))
-        #     print("value_is: " + str(value))
-        #     if key == "miniBubbleType":
-        #         print("key_is: " + str(key))
-        #         print("value_is: " + str(value))
-        #         zestimate = value
-        #
-        # for key, value in comments[0].items():
-        #     print(key, value)
-        #
-        # for item in comments[0]:
-        #     print(item)
-
+        if buildin is None:
+            buildin = "N/A"
+        else:
+            buildin = result[1]
+        return buildin
 
     except (ValueError, AttributeError):
-        zestimate = "NA"
-    if _is_empty(zestimate):
-        zestimate = "NA"
-    return(zestimate)
+        buildin = "N/A"
+    if _is_empty(buildin):
+        buildin = "N/A"
+    return(buildin)
+
+
+
+def get_Community_Name(soup_obj):
+    try:
+        comname = soup_obj.find("div", {"class" : "zsg-photo-card-img"})#.get_text().strip()
+        comments = soup_obj.findAll(text=lambda text: isinstance(text, Comment))#.get_text().strip()
+        if len(comments) == 0:
+            return "N/A"
+        comment = str(comments[0].extract())
+        comment = comment.replace('\\', '')
+        comment = comment.replace('true', 'True')
+        comment = comment.replace('false', 'False')
+        comment = comment[1:]
+        comment = comment[:-1]
+        comment = str(comment).split(',')
+
+        result = None
+        comname = None
+
+        for item in comment:
+            newitem = item.split(':')
+            for res in newitem:
+                #print(res)
+                #print(len(res))
+                if "grouping_name" in res:
+                    result = newitem
+                    break
+
+
+
+        if comname is None:
+            comname = "N/A"
+        else:
+            comname = result[1]
+
+        return comname
+
+    except (ValueError, AttributeError):
+        comname = "N/A"
+    if _is_empty(comname):
+        comname = "N/A"
+    return(comname)
+
+
+
+
 
 
 

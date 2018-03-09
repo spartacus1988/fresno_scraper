@@ -35,7 +35,7 @@ result = None
 for item in data:
     newitem = item.split(':')
     for res in newitem:
-        #print(res)
+        print(res)
         #print(len(res))
         #if res == " 'zestimate'":
         if "zestimate" in res:
@@ -206,6 +206,13 @@ for idx, term in enumerate(st):
         #zestimate
         new_obs.append(zl.get_zestimate(soup))
 
+        #Build_in
+        new_obs.append(zl.get_Build_in(soup))
+
+        #Community_Name
+        new_obs.append(zl.get_Community_Name(soup))
+
+
 
 
 
@@ -223,5 +230,5 @@ zl.close_connection(driver)
 file_name = "%s_%s.csv" % (str(time.strftime("%Y-%m-%d")),
                            str(time.strftime("%H%M%S")))
 columns = ["address", "city", "state", "zip", "price", "sqft", "bedrooms",
-           "bathrooms", "days_on_zillow", "sale_type", "url", "zestimate"]
+           "bathrooms", "days_on_zillow", "sale_type", "url", "zestimate", "Build_in", "Community_Name"]
 pd.DataFrame(output_data, columns = columns).to_csv(file_name, index = False)
