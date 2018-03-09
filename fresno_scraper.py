@@ -203,15 +203,6 @@ for idx, term in enumerate(st):
         # URL for each house listing
         new_obs.append(zl.get_url(soup))
 
-        #zestimate
-        new_obs.append(zl.get_zestimate(soup))
-
-        #Build_in
-        new_obs.append(zl.get_Build_in(soup))
-
-        #Community_Name
-        new_obs.append(zl.get_Community_Name(soup))
-
 
 
 
